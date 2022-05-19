@@ -6,6 +6,7 @@ export default function Carousel(props){
 
     const [activeSlide, setActiveSlide] = useState(0)
     const [windowWidth, setWindowWidth] = useState(0)
+    const [autoplayEnabled, setAutoplayEnabled] = useState(true)
 
     const slideRefs = useRef([])
 
@@ -19,7 +20,9 @@ export default function Carousel(props){
         window.addEventListener('resize', handleResize)
 
         let interval = window.setInterval(() => {
-            nextSlide()
+            if(autoplayEnabled){
+                nextSlide()
+            }
         }, 10000)
 
         return () => {
@@ -31,6 +34,12 @@ export default function Carousel(props){
     useEffect(() => {
         slideRefs.current = slideRefs.current.slice(0, slides.length);
     }, [slides.length])
+
+    useEffect(() => {
+        // slideRefs[activeSlide].scrollIntoView()
+        console.log('slideRefs', slideRefs, activeSlide)
+        slideRefs.current[activeSlide].scrollIntoView()
+    }, [activeSlide])
 
     function nextSlide(){
         if(activeSlide >= slides.length - 1){
@@ -56,7 +65,7 @@ export default function Carousel(props){
             <div className="slides-container">
                 {slides.map((slide, index) => {
                     return (
-                        <div ref={slideRefs[index]} className="carousel-slide" key={`carousel-slide-${index}`}>
+                        <div ref={el => slideRefs.current[index] = el} className="carousel-slide" key={`carousel-slide-${index}`}>
                             {/* slide {index} */}
                             <a href={slide.link_url}>
                                 <img src={slide.image_url} aria-label={slide.aria_label} />
