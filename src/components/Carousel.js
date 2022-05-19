@@ -5,13 +5,25 @@ export default function Carousel(props){
     const { slides } = props
 
     const [activeSlide, setActiveSlide] = useState(0)
+    const [windowWidth, setWindowWidth] = useState(0)
+
+    // const [containerWidth, setContainerWidth] = useState(0)
 
     useEffect(() => {
+        function handleResize(){
+            setWindowWidth(window.innerWidth)
+        }
+
+        window.addEventListener('resize', handleResize)
+
         let interval = window.setInterval(() => {
             nextSlide()
         }, 10000)
 
-        return () => window.clearInterval(interval)
+        return () => {
+            window.clearInterval(interval)
+            window.removeEventListener('resize', handleResize)
+        }
     }, [])
 
     function nextSlide(){
@@ -22,13 +34,16 @@ export default function Carousel(props){
     }
 
     return (
-        <section role="region" aria-label="Image Carousel">
+        <section aria-label="Image Carousel">
             {/* carousel */}
             <div className="slides-container">
                 {slides.map((slide, index) => {
                     return (
                         <div className="carousel-slide" key={`carousel-slide-${index}`}>
-                            slide {index}
+                            {/* slide {index} */}
+                            <a href={slide.link_url}>
+                                <img src={slide.image_url} aria-label={slide.aria_label} />
+                            </a>
                         </div>
                     )
                 })}
