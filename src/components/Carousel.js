@@ -26,7 +26,7 @@ export default function Carousel(props){
             window.clearInterval(interval)
             window.removeEventListener('resize', handleResize)
         }
-    }, [])
+    }, [nextSlide])
 
     useEffect(() => {
         slideRefs.current = slideRefs.current.slice(0, slides.length);
