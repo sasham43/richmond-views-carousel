@@ -8,7 +8,6 @@ export default function Carousel(props){
     const [activeSlide, setActiveSlide] = useState(0)
     const [autoplayEnabled, setAutoplayEnabled] = useState(false)
     const [isHovering, setIsHovering] = useState(false)
-
     const [touchX, setTouchX] = useState(0)
 
     useEffect(() => {
@@ -17,11 +16,6 @@ export default function Carousel(props){
                 nextSlide()
             }
         }, 10000)
-
-        // probably add events to container, not window
-        // window.addEventListener('touchstart', onTouchStart)
-        // window.addEventListener('touchmove', onTouchMove)
-        // window.addEventListener('touchend', onTouchEnd)
 
         return () => {
             window.clearInterval(interval)
@@ -55,25 +49,16 @@ export default function Carousel(props){
         setAutoplayEnabled(!autoplayEnabled)
     }
     function onTouchStart(data){
-        // console.log('touch start', stuff)
         let x = data.changedTouches[0].clientX
 
         setTouchX(x)
     }
     function onTouchEnd(data){
-        // console.log('touch end', stuff)
-        // let rounded = Math.round(activeSlide)
-
-        // console.log('rounded', rounded)
-        // setActiveSlide(rounded)
-
-        
         let x = data.changedTouches[0].clientX
-        // console.log('end', touchX, x, x-touchX, touchX-x)
         let abs = Math.abs(touchX - x)
-        console.log('abs', abs)
+        
+        // compare distance traveled against delta to see if touch is a swipe or errant
         if(abs > touchDelta){
-            // nextSlide()
             if(x > touchX){
                 previousSlide()
             } else {
@@ -81,20 +66,10 @@ export default function Carousel(props){
             }
         }
     }
-    function onTouchMove(data){
-        // console.log('touch move', data, data.changedTouches[0].clientX)
-        // let width = window.innerWidth
-        // let touchX = data.changedTouches[0].clientX
-        // let active = (touchX / width) * slides.length
-        // console.log('calc', touchX / width, active)
-        // setActiveSlide(active)
-    }
     
 
     return (
         <section aria-label="Image Carousel">
-            {/* <h1>{activeSlide}</h1> */}
-            {/* carousel */}
             <div className="carousel-container">
                 <div 
                     className="slides-container" 
@@ -102,14 +77,12 @@ export default function Carousel(props){
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
                     onTouchStart={(data) => onTouchStart(data)}
-                    onTouchMove={(data) => onTouchMove(data)}
                     onTouchEnd={(data) => onTouchEnd(data)}
                 >
                     {slides.map((slide, index) => {
                         return (
                             <div 
-                                id={`slide-${index}`} 
-                                // ref={el => slideRefs.current[index] = el} 
+                                id={`slide-${index}`}  
                                 aria-hidden={index !== activeSlide} 
                                 className="carousel-slide" 
                                 key={`carousel-slide-${index}`}
@@ -122,52 +95,44 @@ export default function Carousel(props){
                     })}
                 </div>
 
-                {/* <div className="carousel-controls"> */}
+                <div className="previous-slide">
+                    <button
+                        className="previous-slide-button" 
+                        aria-label="Previous Slide"
+                        onClick={() => previousSlide()}
+                    >
+                        {"<"}
+                    </button>
+                </div>
+                <div className="next-slide">
+                    <button
+                        className="next-slide-button" 
+                        aria-label="Next Slide"
+                        onClick={() => nextSlide()}
+                    >
+                        {">"}
+                    </button>
+                </div>
 
-                    <div className="previous-slide">
-                        <button
-                            className="previous-slide-button" 
-                            aria-label="Previous Slide"
-                            onClick={() => previousSlide()}
-                        >
-                            {/* Previous */}
-                            {"<"}
-                        </button>
-                    </div>
-                    <div className="next-slide">
-                        <button
-                            className="next-slide-button" 
-                            aria-label="Next Slide"
-                            onClick={() => nextSlide()}
-                        >
-                            {/* Next */}
-                            {">"}
-                        </button>
-                    </div>
-
-                    <div className="slide-indicators">
-                        {slides.map((slide, index) => {
-                            let isActive = index === activeSlide ? true : false
-                            return (
-                                <div aria-current={isActive} key={`carousel-slide-indicator-${index}`}>
-                                    <button 
-                                        onClick={() => goToSlide(index)} 
-                                        className={`slide-indicator-button ${isActive ? 'active' : ''}`}
-                                        aria-label={`Go To Slide ${index}`}
-                                    >
-                                        {/* Go To Slide {index} */}
-                                    </button>
-                                    {/* <a href={`#slide-${index}`}>
-                                        Go To Slide {index}
-                                    </a> */}
-                                </div>
-                            )
-                        })}
-                    </div>
-                {/* </div> */}
+                <div className="slide-indicators">
+                    {slides.map((slide, index) => {
+                        let isActive = index === activeSlide ? true : false
+                        return (
+                            <div aria-current={isActive} key={`carousel-slide-indicator-${index}`}>
+                                <button 
+                                    onClick={() => goToSlide(index)} 
+                                    className={`slide-indicator-button ${isActive ? 'active' : ''}`}
+                                    aria-label={`Go To Slide ${index}`}
+                                >
+                                    {/* Go To Slide {index} */}
+                                </button>
+                            </div>
+                        )
+                    })}
+                </div>
 
 
-                {/* TODO: Add pause autoplay button, at least for screen readers */}
+                {/* Pause autoplay button for screen readers */}
                 <div>
                     <button onClick={() => toggleAutoplay()} aria-label={`${autoplayEnabled ? 'Disable Autplay' : 'Enable Autoplay'}`} className={"toggle-autoplay-button"}>
                         {
