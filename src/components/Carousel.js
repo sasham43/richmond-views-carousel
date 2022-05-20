@@ -62,7 +62,7 @@ export default function Carousel(props){
                                 key={`carousel-slide-${index}`}
                             >
                                 <a href={slide.link_url} target="_blank" rel="noreferrer">
-                                    <img src={slide.image_url} aria-label={slide.aria_label} />
+                                    <img src={slide.image_url} aria-label={slide.aria_label} className="carousel-slide-image" />
                                 </a>
                             </div>
                         )
@@ -92,10 +92,15 @@ export default function Carousel(props){
 
                     <div className="slide-indicators">
                         {slides.map((slide, index) => {
+                            let isActive = index === activeSlide ? true : false
                             return (
-                                <div aria-current={index === activeSlide} key={`carousel-slide-indicator-${index}`}>
-                                    <button onClick={() => goToSlide(index)} className="slide-indicator-button" aria-label={`Go To Slide ${index}`}>
-                                        Go To Slide {index}
+                                <div aria-current={isActive} key={`carousel-slide-indicator-${index}`}>
+                                    <button 
+                                        onClick={() => goToSlide(index)} 
+                                        className={`slide-indicator-button ${isActive ? 'active' : ''}`}
+                                        aria-label={`Go To Slide ${index}`}
+                                    >
+                                        {/* Go To Slide {index} */}
                                     </button>
                                     {/* <a href={`#slide-${index}`}>
                                         Go To Slide {index}
