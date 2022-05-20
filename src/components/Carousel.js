@@ -5,21 +5,12 @@ export default function Carousel(props){
     const { slides } = props
 
     const [activeSlide, setActiveSlide] = useState(0)
-    const [windowWidth, setWindowWidth] = useState(0)
-    const [imageHeight, setImageHeight] = useState(0)
 
     const [autoplayEnabled, setAutoplayEnabled] = useState(false)
 
-    const slideRefs = useRef([])
-
-    // const [containerWidth, setContainerWidth] = useState(0)
+    // const slideRefs = useRef([])
 
     useEffect(() => {
-        function handleResize(){
-            setWindowWidth(window.innerWidth)
-        }
-
-        window.addEventListener('resize', handleResize)
 
         let interval = window.setInterval(() => {
             if(autoplayEnabled){
@@ -29,26 +20,16 @@ export default function Carousel(props){
 
         return () => {
             window.clearInterval(interval)
-            window.removeEventListener('resize', handleResize)
         }
     }, [nextSlide])
 
-    useEffect(() => {
-        slideRefs.current = slideRefs.current.slice(0, slides.length);
-    }, [slides.length])
+    // useEffect(() => {
+    //     slideRefs.current = slideRefs.current.slice(0, slides.length);
+    // }, [slides.length])
 
-    useEffect(() => {
-        slideRefs.current[activeSlide].scrollIntoView()
-    }, [activeSlide])
-
-    useEffect(() => {
-        let imageHeights = slideRefs.current.map(slide => {
-            // console.log('height', slide.offsetHeight)
-            return slide.offsetHeight
-        })
-        let sorted = imageHeights.sort()
-        // console.log('sorted', sorted)
-    }, [windowWidth])
+    // useEffect(() => {
+    //     slideRefs.current[activeSlide].scrollIntoView()
+    // }, [activeSlide])
 
     function nextSlide(){
         if(activeSlide >= slides.length - 1){
@@ -80,8 +61,13 @@ export default function Carousel(props){
                 <div className="slides-container" style={{ transform: `translateX(-${activeSlide * 100}%)`}}>
                     {slides.map((slide, index) => {
                         return (
-                            <div id={`slide-${index}`} ref={el => slideRefs.current[index] = el} aria-hidden={index !== activeSlide} className="carousel-slide" key={`carousel-slide-${index}`}>
-                                {/* slide {index} */}
+                            <div 
+                                id={`slide-${index}`} 
+                                // ref={el => slideRefs.current[index] = el} 
+                                aria-hidden={index !== activeSlide} 
+                                className="carousel-slide" 
+                                key={`carousel-slide-${index}`}
+                            >
                                 <a href={slide.link_url} target="_blank" rel="noreferrer">
                                     <img src={slide.image_url} aria-label={slide.aria_label} />
                                 </a>
