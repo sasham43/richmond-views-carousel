@@ -57,6 +57,8 @@ export default function Carousel(props){
             let next = activeSlide + 1
             setActiveSlide(next)
         }
+
+        // 
     }
     function previousSlide(){
         if(activeSlide == 0){
@@ -72,7 +74,7 @@ export default function Carousel(props){
             <h1>{activeSlide}</h1>
             {/* carousel */}
             <div className="carousel-container">
-                <div className="slides-container" style={{}}>
+                <div className="slides-container" style={{ transform: `translateX(-${activeSlide * 100}%)`}}>
                     {slides.map((slide, index) => {
                         return (
                             <div id={`slide-${index}`} ref={el => slideRefs.current[index] = el} aria-hidden={index !== activeSlide} className="carousel-slide" key={`carousel-slide-${index}`}>

@@ -16,29 +16,41 @@ code {
 
 .carousel-container {
   /* width: 100vw; */
-  width: 1000px;
+  /* width: 1000px;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: column; */
+  overflow: hidden;
 }
 
 .slides-container {
   /* width: 100%; */
   /* width: 200vw; */
-  width: 2400px;
+  /* width: 2400px; */
 
-  overflow-x: smooth;
+  /* overflow-x: smooth; */
   /* overflow-x: auto; */
-  scroll-snap-type: x mandatory; 
+  /* scroll-snap-type: x mandatory; 
   
   
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; */
+
+
+
+  /* width: 100vw; */
+  white-space: nowrap;
+  transition: transform 0.3s;
 }
 
 .carousel-slide {
-  display: inline-block;
+  /* display: inline-block; */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  
 }
 
 .carousel-controls {
