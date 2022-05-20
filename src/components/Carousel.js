@@ -43,11 +43,11 @@ export default function Carousel(props){
 
     useEffect(() => {
         let imageHeights = slideRefs.current.map(slide => {
-            console.log('height', slide.offsetHeight)
+            // console.log('height', slide.offsetHeight)
             return slide.offsetHeight
         })
         let sorted = imageHeights.sort()
-        console.log('sorted', sorted)
+        // console.log('sorted', sorted)
     }, [windowWidth])
 
     function nextSlide(){
@@ -67,6 +67,9 @@ export default function Carousel(props){
             let previous = activeSlide - 1
             setActiveSlide(previous)
         }
+    }
+    function goToSlide(index){
+        setActiveSlide(index)
     }
 
     return (
@@ -112,12 +115,12 @@ export default function Carousel(props){
                         {slides.map((slide, index) => {
                             return (
                                 <div aria-current={index === activeSlide} key={`carousel-slide-indicator-${index}`}>
-                                    {/* <button className="slide-indicator-button" aria-label={`Go To Slide ${index}`}>
+                                    <button onClick={() => goToSlide(index)} className="slide-indicator-button" aria-label={`Go To Slide ${index}`}>
                                         Go To Slide {index}
-                                    </button> */}
-                                    <a href={`#slide-${index}`}>
+                                    </button>
+                                    {/* <a href={`#slide-${index}`}>
                                         Go To Slide {index}
-                                    </a>
+                                    </a> */}
                                 </div>
                             )
                         })}
