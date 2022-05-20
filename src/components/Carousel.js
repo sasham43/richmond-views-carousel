@@ -116,7 +116,7 @@ export default function Carousel(props){
 
                 {/* TODO: Add pause autoplay button, at least for screen readers */}
                 <div>
-                    <button onClick={() => toggleAutoplay()} aria-label={`${autoplayEnabled ? 'Disable Autplay' : 'Enable Autoplay'}`}>
+                    <button onClick={() => toggleAutoplay()} aria-label={`${autoplayEnabled ? 'Disable Autplay' : 'Enable Autoplay'}`} className={"toggle-autoplay-button"}>
                         {
                             autoplayEnabled ? 
                             <span>Disable Autoplay</span>

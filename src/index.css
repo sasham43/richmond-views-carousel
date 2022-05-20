@@ -49,15 +49,16 @@ code {
   width: 15px;
   height: 15px;
   border-radius: 10px;
-  background-color: #aaa;
+  background-color: #777;
   border: none;
 }
 .slide-indicator-button.active {
-  background-color: #333;
+  background-color: #eee;
 }
 
 
 /* render button elements but hide from users on mobile */
+.toggle-autoplay-button,
 .next-slide-button,
 .previous-slide-button {
   position: absolute;
