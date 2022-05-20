@@ -8,8 +8,6 @@ export default function Carousel(props){
 
     const [autoplayEnabled, setAutoplayEnabled] = useState(false)
 
-    // const slideRefs = useRef([])
-
     useEffect(() => {
 
         let interval = window.setInterval(() => {
@@ -22,14 +20,6 @@ export default function Carousel(props){
             window.clearInterval(interval)
         }
     }, [nextSlide])
-
-    // useEffect(() => {
-    //     slideRefs.current = slideRefs.current.slice(0, slides.length);
-    // }, [slides.length])
-
-    // useEffect(() => {
-    //     slideRefs.current[activeSlide].scrollIntoView()
-    // }, [activeSlide])
 
     function nextSlide(){
         if(activeSlide >= slides.length - 1){
@@ -51,6 +41,9 @@ export default function Carousel(props){
     }
     function goToSlide(index){
         setActiveSlide(index)
+    }
+    function toggleAutoplay(){
+        setAutoplayEnabled(!autoplayEnabled)
     }
 
     return (
@@ -76,7 +69,7 @@ export default function Carousel(props){
                     })}
                 </div>
 
-                <div className="carousel-controls">
+                {/* <div className="carousel-controls"> */}
 
                     <div className="previous-slide">
                         <button
@@ -111,10 +104,20 @@ export default function Carousel(props){
                             )
                         })}
                     </div>
-                </div>
+                {/* </div> */}
 
 
                 {/* TODO: Add pause autoplay button, at least for screen readers */}
+                <div>
+                    <button onClick={() => toggleAutoplay()} aria-label={`${autoplayEnabled ? 'Disable Autplay' : 'Enable Autoplay'}`}>
+                        {
+                            autoplayEnabled ? 
+                            <span>Disable Autoplay</span>
+                            :
+                            <span>Enable Autoplay</span>
+                        }
+                    </button>
+                </div>
             </div>
         </section>
     )
