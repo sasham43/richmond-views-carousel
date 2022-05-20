@@ -77,7 +77,8 @@ export default function Carousel(props){
                             aria-label="Previous Slide"
                             onClick={() => previousSlide()}
                         >
-                            Previous
+                            {/* Previous */}
+                            {"<"}
                         </button>
                     </div>
                     <div className="next-slide">
@@ -86,7 +87,8 @@ export default function Carousel(props){
                             aria-label="Next Slide"
                             onClick={() => nextSlide()}
                         >
-                            Next
+                            {/* Next */}
+                            {">"}
                         </button>
                     </div>
 

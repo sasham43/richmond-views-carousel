@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
   /* overflow: hidden; */
+  background-color: #111;
 }
 
 code {
@@ -20,18 +21,13 @@ code {
 
 .slides-container {
   white-space: nowrap;
-  transition: transform 0.3s;
+  transition: transform 0.7s;
 }
 
 .carousel-slide {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-@media(min-width: 768px){
-  .carousel-slide {
-    width: 100vw;
-  }
 }
 
 /* .carousel-controls {
@@ -58,4 +54,54 @@ code {
 }
 .slide-indicator-button.active {
   background-color: #333;
+}
+
+
+/* render button elements but hide from users on mobile */
+.next-slide-button,
+.previous-slide-button {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+
+/* Desktop Styles */
+@media(min-width: 768px) {
+  .carousel-slide {
+    width: 100vw;
+  }
+  .next-slide-button,
+  .previous-slide-button {
+    position: absolute;
+    height: 100vh;
+    width: 75px;
+    top: 0;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    color: #fff;
+    font-size: 24px;
+
+    /* width: unset; */
+    overflow: unset;
+    padding: unset;
+    clip: unset;
+    border-width: unset;
+    white-space: unset;
+  }
+  
+  .next-slide-button {
+    right: 0;
+  }
+  
+  .previous-slide-button {
+    left: 0;
+  }
 }
