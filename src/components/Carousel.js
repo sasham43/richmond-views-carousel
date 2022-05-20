@@ -80,14 +80,16 @@ export default function Carousel(props){
                     onTouchEnd={(data) => onTouchEnd(data)}
                 >
                     {slides.map((slide, index) => {
+                        let isActive = index === activeSlide ? true : false
                         return (
                             <div 
                                 id={`slide-${index}`}  
-                                aria-hidden={index !== activeSlide} 
+                                aria-hidden={!isActive ? true : false}
+                                tabIndex={isActive ? 0 : -1} 
                                 className="carousel-slide" 
                                 key={`carousel-slide-${index}`}
                             >
-                                <a href={slide.link_url} target="_blank" rel="noreferrer">
+                                <a href={slide.link_url} target="_blank" rel="noreferrer" tabIndex={isActive ? 0 : -1} >
                                     <img src={slide.image_url} aria-label={slide.aria_label} className="carousel-slide-image" />
                                 </a>
                             </div>

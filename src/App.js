@@ -23,23 +23,14 @@ function App() {
   ]
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <Carousel 
-        slides={slides}
-      />
+      <header>
+        <h1 className="header">Doug Ash's Views of Richmond</h1>
+      </header>
+      <main>
+        <Carousel 
+          slides={slides}
+        />
+      </main>
     </div>
   );
 }
