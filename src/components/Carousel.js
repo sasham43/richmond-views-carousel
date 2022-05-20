@@ -3,23 +3,34 @@ import React, { useState, useEffect, useRef } from 'react'
 
 export default function Carousel(props){
     const { slides } = props
+    const touchDelta = 35
 
     const [activeSlide, setActiveSlide] = useState(0)
-    const [autoplayEnabled, setAutoplayEnabled] = useState(true)
+    const [autoplayEnabled, setAutoplayEnabled] = useState(false)
     const [isHovering, setIsHovering] = useState(false)
 
-    useEffect(() => {
+    const [touchX, setTouchX] = useState(0)
 
+    useEffect(() => {
         let interval = window.setInterval(() => {
             if(autoplayEnabled && !isHovering){
                 nextSlide()
             }
         }, 10000)
 
+        // probably add events to container, not window
+        // window.addEventListener('touchstart', onTouchStart)
+        // window.addEventListener('touchmove', onTouchMove)
+        // window.addEventListener('touchend', onTouchEnd)
+
         return () => {
             window.clearInterval(interval)
         }
     }, [nextSlide])
+
+    useEffect(() => {
+        // console.log('active slide changed', activeSlide, activeSlide % 0)
+    }, [activeSlide])
 
     function nextSlide(){
         if(activeSlide >= slides.length - 1){
@@ -43,6 +54,41 @@ export default function Carousel(props){
     function toggleAutoplay(){
         setAutoplayEnabled(!autoplayEnabled)
     }
+    function onTouchStart(data){
+        // console.log('touch start', stuff)
+        let x = data.changedTouches[0].clientX
+
+        setTouchX(x)
+    }
+    function onTouchEnd(data){
+        // console.log('touch end', stuff)
+        // let rounded = Math.round(activeSlide)
+
+        // console.log('rounded', rounded)
+        // setActiveSlide(rounded)
+
+        
+        let x = data.changedTouches[0].clientX
+        // console.log('end', touchX, x, x-touchX, touchX-x)
+        let abs = Math.abs(touchX - x)
+        console.log('abs', abs)
+        if(abs > touchDelta){
+            // nextSlide()
+            if(x > touchX){
+                previousSlide()
+            } else {
+                nextSlide()
+            }
+        }
+    }
+    function onTouchMove(data){
+        // console.log('touch move', data, data.changedTouches[0].clientX)
+        // let width = window.innerWidth
+        // let touchX = data.changedTouches[0].clientX
+        // let active = (touchX / width) * slides.length
+        // console.log('calc', touchX / width, active)
+        // setActiveSlide(active)
+    }
     
 
     return (
@@ -55,6 +101,9 @@ export default function Carousel(props){
                     style={{ transform: `translateX(-${activeSlide * 100}%)`}}
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
+                    onTouchStart={(data) => onTouchStart(data)}
+                    onTouchMove={(data) => onTouchMove(data)}
+                    onTouchEnd={(data) => onTouchEnd(data)}
                 >
                     {slides.map((slide, index) => {
                         return (
