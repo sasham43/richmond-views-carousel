@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  /* overflow: hidden; */
 }
 
 code {
@@ -12,12 +14,36 @@ code {
     monospace;
 }
 
+.carousel-container {
+  /* width: 100vw; */
+  width: 1000px;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
 .slides-container {
   /* width: 100%; */
-  width: 200vw;
+  /* width: 200vw; */
+  width: 2400px;
+
+  overflow-x: smooth;
+  /* overflow-x: auto; */
+  scroll-snap-type: x mandatory; 
+  
+  
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel-slide {
   display: inline-block;
+}
+
+.carousel-controls {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
 }

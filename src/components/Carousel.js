@@ -6,7 +6,9 @@ export default function Carousel(props){
 
     const [activeSlide, setActiveSlide] = useState(0)
     const [windowWidth, setWindowWidth] = useState(0)
-    const [autoplayEnabled, setAutoplayEnabled] = useState(true)
+    const [imageHeight, setImageHeight] = useState(0)
+
+    const [autoplayEnabled, setAutoplayEnabled] = useState(false)
 
     const slideRefs = useRef([])
 
@@ -36,10 +38,17 @@ export default function Carousel(props){
     }, [slides.length])
 
     useEffect(() => {
-        // slideRefs[activeSlide].scrollIntoView()
-        console.log('slideRefs', slideRefs, activeSlide)
         slideRefs.current[activeSlide].scrollIntoView()
     }, [activeSlide])
+
+    useEffect(() => {
+        let imageHeights = slideRefs.current.map(slide => {
+            console.log('height', slide.offsetHeight)
+            return slide.offsetHeight
+        })
+        let sorted = imageHeights.sort()
+        console.log('sorted', sorted)
+    }, [windowWidth])
 
     function nextSlide(){
         if(activeSlide >= slides.length - 1){
@@ -62,51 +71,60 @@ export default function Carousel(props){
         <section aria-label="Image Carousel">
             <h1>{activeSlide}</h1>
             {/* carousel */}
-            <div className="slides-container">
-                {slides.map((slide, index) => {
-                    return (
-                        <div ref={el => slideRefs.current[index] = el} className="carousel-slide" key={`carousel-slide-${index}`}>
-                            {/* slide {index} */}
-                            <a href={slide.link_url}>
-                                <img src={slide.image_url} aria-label={slide.aria_label} />
-                            </a>
-                        </div>
-                    )
-                })}
-            </div>
+            <div className="carousel-container">
+                <div className="slides-container" style={{}}>
+                    {slides.map((slide, index) => {
+                        return (
+                            <div id={`slide-${index}`} ref={el => slideRefs.current[index] = el} aria-hidden={index !== activeSlide} className="carousel-slide" key={`carousel-slide-${index}`}>
+                                {/* slide {index} */}
+                                <a href={slide.link_url} target="_blank" rel="noreferrer">
+                                    <img src={slide.image_url} aria-label={slide.aria_label} />
+                                </a>
+                            </div>
+                        )
+                    })}
+                </div>
 
-            <div className="previous-slide">
-                <button
-                    className="previous-slide-button" 
-                    aria-label="Previous Slide"
-                    onClick={() => previousSlide()}
-                >
-                    Previous
-                </button>
-            </div>
-            <div className="next-slide">
-                <button
-                    className="next-slide-button" 
-                    aria-label="Next Slide"
-                    onClick={() => nextSlide()}
-                >
-                    Next
-                </button>
-            </div>
+                <div className="carousel-controls">
 
-            <div className="slide-indicators">
-                {slides.map((slide, index) => {
-                    return (
-                        <div key={`carousel-slide-indicator-${index}`}>
-                            <button className="slide-indicator-button" aria-label={`Go To Slide ${index}`}>
-                                Go To Slide {index}
-                            </button>
-                        </div>
-                    )
-                })}
-            </div>
+                    <div className="previous-slide">
+                        <button
+                            className="previous-slide-button" 
+                            aria-label="Previous Slide"
+                            onClick={() => previousSlide()}
+                        >
+                            Previous
+                        </button>
+                    </div>
+                    <div className="next-slide">
+                        <button
+                            className="next-slide-button" 
+                            aria-label="Next Slide"
+                            onClick={() => nextSlide()}
+                        >
+                            Next
+                        </button>
+                    </div>
 
-            {/* TODO: Add pause autoplay button, at least for screen readers */}
+                    <div className="slide-indicators">
+                        {slides.map((slide, index) => {
+                            return (
+                                <div aria-current={index === activeSlide} key={`carousel-slide-indicator-${index}`}>
+                                    {/* <button className="slide-indicator-button" aria-label={`Go To Slide ${index}`}>
+                                        Go To Slide {index}
+                                    </button> */}
+                                    <a href={`#slide-${index}`}>
+                                        Go To Slide {index}
+                                    </a>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+
+
+                {/* TODO: Add pause autoplay button, at least for screen readers */}
+            </div>
         </section>
     )
 }
