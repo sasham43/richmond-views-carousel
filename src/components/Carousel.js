@@ -22,10 +22,6 @@ export default function Carousel(props){
         }
     }, [nextSlide])
 
-    useEffect(() => {
-        // console.log('active slide changed', activeSlide, activeSlide % 0)
-    }, [activeSlide])
-
     function nextSlide(){
         if(activeSlide >= slides.length - 1){
             setActiveSlide(0)
