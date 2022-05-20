@@ -17,6 +17,7 @@ code {
 
 .header {
   color: #eee;
+  font-size: 24px;
 }
 .carousel-container {
   overflow: hidden;
@@ -41,14 +42,27 @@ code {
   display: flex;
   justify-content: space-evenly;
 }
+
+
 .slide-indicator-button {
+  border: none;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0,0,0,0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.slide-indicator-dot {
   width: 15px;
   height: 15px;
   border-radius: 15px;
   background-color: #777;
   border: none;
 }
-.slide-indicator-button.active {
+.slide-indicator-dot.active {
   background-color: #eee;
 }
 

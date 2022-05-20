@@ -122,10 +122,11 @@ export default function Carousel(props){
                             <div aria-current={isActive} key={`carousel-slide-indicator-${index}`}>
                                 <button 
                                     onClick={() => goToSlide(index)} 
-                                    className={`slide-indicator-button ${isActive ? 'active' : ''}`}
+                                    className={`slide-indicator-button`}
                                     aria-label={`Go To Slide ${index}`}
                                 >
                                     {/* Go To Slide {index} */}
+                                    <div className={`slide-indicator-dot ${isActive ? 'active' : ''}`}></div>
                                 </button>
                             </div>
                         )

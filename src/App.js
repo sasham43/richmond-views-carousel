@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1 className="header">Doug Ash's Views of Richmond</h1>
+        <h1 className="header">Views of Richmond</h1>
       </header>
       <main>
         <Carousel 
