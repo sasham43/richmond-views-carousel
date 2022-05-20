@@ -5,13 +5,13 @@ export default function Carousel(props){
     const { slides } = props
 
     const [activeSlide, setActiveSlide] = useState(0)
-
-    const [autoplayEnabled, setAutoplayEnabled] = useState(false)
+    const [autoplayEnabled, setAutoplayEnabled] = useState(true)
+    const [isHovering, setIsHovering] = useState(false)
 
     useEffect(() => {
 
         let interval = window.setInterval(() => {
-            if(autoplayEnabled){
+            if(autoplayEnabled && !isHovering){
                 nextSlide()
             }
         }, 10000)
@@ -28,8 +28,6 @@ export default function Carousel(props){
             let next = activeSlide + 1
             setActiveSlide(next)
         }
-
-        // 
     }
     function previousSlide(){
         if(activeSlide == 0){
@@ -45,13 +43,19 @@ export default function Carousel(props){
     function toggleAutoplay(){
         setAutoplayEnabled(!autoplayEnabled)
     }
+    
 
     return (
         <section aria-label="Image Carousel">
-            <h1>{activeSlide}</h1>
+            {/* <h1>{activeSlide}</h1> */}
             {/* carousel */}
             <div className="carousel-container">
-                <div className="slides-container" style={{ transform: `translateX(-${activeSlide * 100}%)`}}>
+                <div 
+                    className="slides-container" 
+                    style={{ transform: `translateX(-${activeSlide * 100}%)`}}
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                >
                     {slides.map((slide, index) => {
                         return (
                             <div 
