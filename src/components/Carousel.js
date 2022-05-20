@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
-
+import React, { useState, useEffect } from 'react'
 
 export default function Carousel(props){
     const { slides } = props
@@ -45,6 +44,7 @@ export default function Carousel(props){
         setAutoplayEnabled(!autoplayEnabled)
     }
     function onTouchStart(data){
+        // capture touch position so we can compare it later
         let x = data.changedTouches[0].clientX
 
         setTouchX(x)
@@ -67,6 +67,7 @@ export default function Carousel(props){
     return (
         <section aria-label="Image Carousel">
             <div className="carousel-container">
+                {/* Main Slides Container */}
                 <div 
                     className="slides-container" 
                     style={{ transform: `translateX(-${activeSlide * 100}%)`}}
@@ -93,6 +94,7 @@ export default function Carousel(props){
                     })}
                 </div>
 
+                {/* Previous & Next Arrows */}
                 <div className="previous-slide">
                     <button
                         className="previous-slide-button" 
@@ -112,6 +114,7 @@ export default function Carousel(props){
                     </button>
                 </div>
 
+                {/* Slide Indicators  */}
                 <div className="slide-indicators">
                     {slides.map((slide, index) => {
                         let isActive = index === activeSlide ? true : false
