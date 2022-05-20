@@ -49,8 +49,13 @@ code {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 200px;
-  
+  /* height: 200px; */
+  /* width: 100vw; */
+}
+@media(min-width: 768px){
+  .carousel-slide {
+    width: 100vw;
+  }
 }
 
 .carousel-controls {
@@ -58,4 +63,8 @@ code {
   bottom: 10px;
   display: flex;
   justify-content: center;
+}
+
+img {
+  width: 100%;
 }
