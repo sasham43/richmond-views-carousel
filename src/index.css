@@ -38,6 +38,16 @@ code {
   width: 100%;
 }
 
+.next-slide-button,
+.previous-slide-button {
+  transition: all .2s;
+}
+
+.next-slide-button:hover,
+.previous-slide-button:hover {
+  transform: scale(1.5);
+}
+
 .slide-indicators {
   display: flex;
   justify-content: space-evenly;
